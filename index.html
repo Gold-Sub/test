@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Proxy Panel</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Font (Lobster for title, Poppins for others) -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #f5f5f7, #e0e0e0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+        .glass-container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+            padding: 35px 30px 50px;
+            transition: all 0.2s;
+        }
+        /* header */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .gold-title {
+            font-family: 'Lobster', cursive;
+            font-size: 4.2rem;
+            background: linear-gradient(135deg, #d4af37, #f9d976, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            letter-spacing: 1px;
+            animation: shimmer 3s infinite alternate;
+        }
+        @keyframes shimmer {
+            0% { filter: drop-shadow(0 0 5px rgba(212,175,55,0.2)); }
+            100% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+        }
+        .sub-id {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #2c2c2c;
+            background: rgba(255,215,0,0.15);
+            padding: 5px 25px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(212,175,55,0.3);
+            margin-top: -12px;
+            letter-spacing: 0.5px;
+        }
+        .sub-id i {
+            color: #d4af37;
+            margin-right: 10px;
+        }
+
+        /* stats row */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+            background: rgba(255,255,240,0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 80px;
+            padding: 14px 20px;
+            margin: 15px 0 30px;
+            border: 1px solid rgba(255,215,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e1e1e;
+            background: rgba(255,255,255,0.4);
+            padding: 6px 18px;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+        }
+        .stat-item i {
+            color: #d4af37;
+            font-size: 1.3rem;
+        }
+        .stat-number {
+            background: #1e1e1e;
+            color: #f5e7b0;
+            padding: 0 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* login box */
+        .login-box {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            padding: 20px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 15px 20px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        }
+        .login-box input {
+            background: rgba(255,255,255,0.6);
+            border: none;
+            padding: 12px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            outline: 1px solid rgba(0,0,0,0.05);
+            backdrop-filter: blur(4px);
+            min-width: 160px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .login-box input:focus {
+            outline: 2px solid #d4af37;
+            background: white;
+        }
+        .login-box button {
+            background: linear-gradient(135deg, #d4af37, #f5d371);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 60px;
+            font-weight: 700;
+            color: #1e1e1e;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(212,175,55,0.3);
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,200,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .login-box button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px rgba(212,175,55,0.5);
+        }
+        .login-error {
+            color: #b22222;
+            font-weight: 600;
+            background: rgba(255,0,0,0.08);
+            padding: 6px 20px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,0,0,0.1);
+        }
+
+        /* proxy grid */
+        .proxy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .proxy-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 18px 18px 18px 22px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .proxy-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: #d4af37;
+            box-shadow: 0 18px 35px rgba(212,175,55,0.15);
+        }
+        .proxy-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e1e1e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,215,0,0.1);
+            padding: 4px 14px 4px 10px;
+            border-radius: 40px;
+            width: fit-content;
+        }
+        .proxy-name i {
+            color: #d4af37;
+        }
+        .proxy-link {
+            font-size: 0.8rem;
+            word-break: break-all;
+            color: #3a3a3a;
+            background: rgba(0,0,0,0.02);
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .proxy-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .btn-copy {
+            background: rgba(30, 30, 30, 0.08);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e1e1e;
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-copy i {
+            color: #d4af37;
+        }
+        .btn-copy:hover {
+            background: #d4af37;
+            color: #1e1e1e;
+            border-color: #d4af37;
+            box-shadow: 0 6px 14px rgba(212,175,55,0.3);
+        }
+        .btn-copy.copied {
+            background: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+        .btn-copy.copied i {
+            color: white;
+        }
+        .copy-feedback {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2e7d32;
+            background: rgba(46,125,50,0.08);
+            padding: 2px 14px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-left: 6px;
+        }
+
+        /* footer / extra */
+        .user-list-section {
+            margin-top: 40px;
+            background: rgba(255,255,240,0.25);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 20px 25px;
+            border: 1px solid rgba(212,175,55,0.15);
+        }
+        .user-list-title {
+            font-weight: 700;
+            color: #1e1e1e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .user-list-title i {
+            color: #d4af37;
+        }
+        #userListContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: 0.95rem;
+            color: #1a1a1a;
+        }
+        .user-badge {
+            background: rgba(255,255,255,0.5);
+            padding: 4px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(212,175,55,0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        /* responsive */
+        @media (max-width: 650px) {
+            .gold-title { font-size: 2.8rem; }
+            .sub-id { font-size: 1.2rem; }
+            .login-box { border-radius: 40px; padding: 18px; }
+            .stats-row { border-radius: 40px; }
+            .stat-item { font-size: 0.9rem; padding: 4px 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="glass-container" id="app">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="gold-title">✨ Gold Proxy</div>
+        <div class="sub-id"><i class="fas fa-crown"></i> @Gold_Proxy_Official</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-item"><i class="fas fa-server"></i> تعداد پروکسی : <span class="stat-number" id="totalProxies">0</span></div>
+        <div class="stat-item"><i class="fas fa-copy"></i> کپی شده : <span class="stat-number" id="copiedCount">0</span></div>
+        <div class="stat-item"><i class="fas fa-users"></i> وارد شده : <span class="stat-number" id="userCount">0</span></div>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="login-box" id="loginPanel">
+        <input type="text" id="usernameInput" placeholder="یوزرنیم (انگلیسی)" value="">
+        <input type="password" id="passwordInput" placeholder="رمز پنل">
+        <button id="loginBtn"><i class="fas fa-key"></i> ورود</button>
+        <span id="loginError" class="login-error" style="display:none;">رمز اشتباه است</span>
+        <span id="loginSuccess" style="color:#2e7d32; font-weight:600; display:none;"><i class="fas fa-check-circle"></i> وارد شدید</span>
+    </div>
+
+    <!-- PROXY GRID -->
+    <div id="proxyGrid" class="proxy-grid"></div>
+
+    <!-- USER LIST -->
+    <div class="user-list-section">
+        <div class="user-list-title"><i class="fas fa-address-book"></i> لیست کاربران وارد شده</div>
+        <div id="userListContainer"><span style="opacity:0.6;">هنوز کسی وارد نشده</span></div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ------------- پروکسی لینک‌ها (همون لیست) ------------
+        const proxyLinks = [
+            "https://t.me/proxy?server=noron.talebi.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=lux.lavazemi1.co.uk&port=2096&secret=ee1603010200010001fc030386e24c3add7777772e7961686f6f2e636f6d",
+            "https://t.me/proxy?server=gallery.talebi.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=star.talebi.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=kala.golgoli1.co.uk&port=443&secret=ee1603010200010001fc030386e24c3add7777772e7961686f6f2e636f6d",
+            "https://t.me/proxy?server=new.vafadari.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=silver.ciaude.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=book.malavanann.co.uk&port=2096&secret=ee1603010200010001fc030386e24c3add7777772e7961686f6f2e636f6d",
+            "https://t.me/proxy?server=gold.lavazemi4.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=box.lavazemi5.co.uk&port=2053&secret=ee1603010200010001fc030386e24c3add7777772e7961686f6f2e636f6d",
+            "https://t.me/proxy?server=bia.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=goat.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=khob.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=messi.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "tg://proxy?server=messi2.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "tg://proxy?server=bad.nisti.co.uk&port=8880&secret=EERighJJvXrFGRMCIMJdCQ==",
+            "https://t.me/proxy?server=bia.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=goat.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=khob.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=messi.nisti.co.uk&port=8880&secret=eeNEgYdJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=cloud.click-master.co.uk&port=8443&secret=EERighJJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=dark.basicscotch.co.uk&port=22&secret=ee1603010200010001fc030386e24c3add6d656469612e737465616d706f77657265642e636f6d",
+            "https://t.me/proxy?server=blond.basicscotch.co.uk&port=25565&secret=ee1603010200010001fc030386e24c3add6d656469612e737465616d706f77657265642e636f6d",
+            "https://t.me/proxy?server=b.sub-ploter.co.uk&port=22&secret=ee1603010200010001fc030386e24c3add6d656469612e737465616d706f77657265642e636f6d",
+            "https://t.me/proxy?server=beer.crona-extra.co.uk&port=8443&secret=EERighJJvXrFGRMCIMJdCQ",
+            "https://t.me/proxy?server=super.sub-ploter.co.uk&port=25565&secret=ee1603010200010001fc030386e24c3add6d656469612e737465616d706f77657265642e636f6d",
+            "https://t.me/proxy?server=PAyDaR.goooalir.co.uk&port=8443&secret=dd104462821249bd7ac519130220c25d09",
+            "https://t.me/proxy?server=nab.goooalir.co.uk&port=8443&secret=dd104462821249bd7ac519130220c25d09",
+            "https://t.me/proxy?server=tassian.goooalir.co.uk&port=8443&secret=dd104462821249bd7ac519130220c25d09"
+        ];
+
+        // ---------- state ----------
+        let users = [];              // لیست اسم کاربران
+        let copiedCount = 0;         // تعداد کل کپی‌ها (تعداد دفعات کپی)
+        let isLoggedIn = false;
+        let currentUser = '';
+
+        // DOM refs
+        const grid = document.getElementById('proxyGrid');
+        const totalSpan = document.getElementById('totalProxies');
+        const copiedSpan = document.getElementById('copiedCount');
+        const userCountSpan = document.getElementById('userCount');
+        const userListContainer = document.getElementById('userListContainer');
+        const loginError = document.getElementById('loginError');
+        const loginSuccess = document.getElementById('loginSuccess');
+        const usernameInput = document.getElementById('usernameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBtn = document.getElementById('loginBtn');
+
+        // ---------- helper functions ----------
+        function updateStats() {
+            totalSpan.textContent = proxyLinks.length;
+            copiedSpan.textContent = copiedCount;
+            userCountSpan.textContent = users.length;
+            // update user list
+            if (users.length === 0) {
+                userListContainer.innerHTML = '<span style="opacity:0.6;">هنوز کسی وارد نشده</span>';
+            } else {
+                userListContainer.innerHTML = users.map(u => `<span class="user-badge"><i class="fas fa-user"></i> ${u}</span>`).join(' ');
+            }
+        }
+
+        // نمایش پروکسی‌ها
+        function renderProxies() {
+            grid.innerHTML = '';
+            proxyLinks.forEach((link, index) => {
+                const card = document.createElement('div');
+                card.className = 'proxy-card';
+
+                // اسم پروکسی: از سرور بگیریم
+                let serverName = 'proxy';
+                try {
+                    const url = new URL(link);
+                    const s = url.searchParams.get('server');
+                    if (s) serverName = s;
+                } catch (e) { /* ignore */ }
+
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'proxy-name';
+                nameDiv.innerHTML = `<i class="fas fa-link"></i> ${serverName}`;
+
+                const linkDiv = document.createElement('div');
+                linkDiv.className = 'proxy-link';
+                linkDiv.textContent = link.length > 70 ? link.slice(0, 70) + '…' : link;
+                linkDiv.title = link;
+
+                const actions = document.createElement('div');
+                actions.className = 'proxy-actions';
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'btn-copy';
+                copyBtn.innerHTML = `<i class="fas fa-copy"></i> کپی`;
+                copyBtn.setAttribute('data-link', link);
+
+                // event copy
+                copyBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const linkText = this.getAttribute('data-link');
+                    // کپی
+                    navigator.clipboard.writeText(linkText).then(() => {
+                        // افزایش کپی
+                        copiedCount += 1;
+                        updateStats();
+                        // نمایش "کپی شد" روی دکمه
+                        this.classList.add('copied');
+                        this.innerHTML = `<i class="fas fa-check"></i> کپی شد`;
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                            this.innerHTML = `<i class="fas fa-copy"></i> کپی`;
+                        }, 2000);
+                    }).catch(() => {
+                        alert('خطا در کپی، لطفاً دستی کپی کنید');
+                    });
+                });
+
+                actions.appendChild(copyBtn);
+                card.appendChild(nameDiv);
+                card.appendChild(linkDiv);
+                card.appendChild(actions);
+                grid.appendChild(card);
+            });
+        }
+
+        // ---------- login logic ----------
+        function attemptLogin() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            // بررسی یوزرنیم (انگلیسی)
+            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                loginError.style.display = 'block';
+                loginError.textContent = 'یوزرنیم باید انگلیسی باشد';
+                loginSuccess.style.display = 'none';
+                return;
+            }
+            if (password !== 'Gold-Proxy-Official') {
+                loginError.style.display = 'block';
+                loginError.textContent = 'رمز اشتباه است';
+                loginSuccess.style.display = 'none';
+                return;
+            }
+
+            // موفق
+            loginError.style.display = 'none';
+            loginSuccess.style.display = 'block';
+            loginSuccess.textContent = `✅ وارد شدید، خوش آمدید ${username}`;
+            isLoggedIn = true;
+            currentUser = username;
+
+            // اضافه کردن کاربر به لیست (اگر قبلا نبود)
+            if (!users.includes(username)) {
+                users.push(username);
+                updateStats();
+            }
+            // غیرفعال کردن ورود دوباره
+            usernameInput.disabled = true;
+            passwordInput.disabled = true;
+            loginBtn.disabled = true;
+            loginBtn.style.opacity = '0.6';
+            // پیام
+        }
+
+        // ---------- event listeners ----------
+        loginBtn.addEventListener('click', attemptLogin);
+        // enter key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (document.activeElement === usernameInput || document.activeElement === passwordInput) {
+                    attemptLogin();
+                }
+            }
+        });
+
+        // ---------- init ----------
+        renderProxies();
+        updateStats();
+
+        // نمایش خطاهای اولیه مخفی
+        loginError.style.display = 'none';
+        loginSuccess.style.display = 'none';
+
+        // اگر کاربری وارد شده بود (برای حالت refresh) – اینجا نه
+        // ولی میشه از localStorage هم استفاده کرد، برای سادگی نمیذاریم.
+        // همچنین هر بار refresh لیست کاربران ریست میشه، درخواست شده "جمعی" و "لیست" پس به همین صورت محلی.
+        // برای جمعی‌تر شدن میتونستیم از localStorage استفاده کنیم ولی به سادگی هر بار refresh reset.
+
+        // تعداد پروکسی‌ها در stat
+        totalSpan.textContent = proxyLinks.length;
+
+        // اضافه کردن امکانات: اگر کاربر خواست دوباره لاگین کنه، refresh میکنه.
+        // همچنین برای راحتی، یه دکمه خروج نمیزاریم چون خواسته نشده.
+        // پیاده سازی reset با refresh.
+
+        console.log('Gold Proxy Panel Loaded!');
+    })();
+</script>
+</body>
+</html>
